@@ -15,16 +15,22 @@ const Tab = createBottomTabNavigator();
 
 const AuthStack = () => {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name='Login' component={Login} />
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false
+      }}
+    >
+
       <Stack.Screen name='Register' component={Register} />
+      <Stack.Screen name='Login' component={Login} />
     </Stack.Navigator>
   )
 }
 
 const AppStack = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={{headerShown: false}}>
       <Tab.Screen name='TrackList' component={TrackList} />
       <Tab.Screen name='TrackDetails' component={TrackDetails} />
       <Tab.Screen name='CreateTrack' component={CreateTrack} />
@@ -40,9 +46,9 @@ export default function App() {
   return (
     <SafeAreaProvider>
 
-    <NavigationContainer>
-      {loggedIn ? <AppStack /> : <AuthStack />}
-    </NavigationContainer>
+      <NavigationContainer>
+        {!loggedIn ? <AppStack /> : <AuthStack />}
+      </NavigationContainer>
     </SafeAreaProvider>
   );
 }

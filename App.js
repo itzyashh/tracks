@@ -5,6 +5,7 @@ import store, { persistor } from "./src/redux/store";
 import Register from "./src/screens/Register";
 import { PersistGate } from "redux-persist/integration/react";
 import { MainNavigation } from "./src/naviagation/MainNavigation";
+import FlashMessage from "react-native-flash-message";
 
 
 export default function App() {
@@ -18,6 +19,7 @@ export default function App() {
           <MainNavigation />
         </PersistGate>
       </Provider>
+      <FlashMessage position="top" />
     </SafeAreaProvider>
   );
 }

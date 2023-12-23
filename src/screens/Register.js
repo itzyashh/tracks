@@ -5,6 +5,7 @@ import Spacer from '../components/Spacer'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateFirstName, updateIsLogged, updateLastName } from '../redux/UserReducer/reducer'
 import tracker from '../api/tracker'
+import { showMessage } from 'react-native-flash-message'
 
 const Register = () => {
   const dispatch = useDispatch()
@@ -19,6 +20,11 @@ const Register = () => {
     console.log(response.data)
     } catch (error) {
       console.log(error)
+      showMessage({
+        message: error.response.data,
+        description: 'Something went wrong',
+        type: 'danger',
+      })
     }
   }
 

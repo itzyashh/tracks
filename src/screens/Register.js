@@ -5,7 +5,8 @@ import Spacer from '../components/Spacer'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateFirstName, updateIsLogged, updateLastName } from '../redux/UserReducer/reducer'
 import tracker from '../api/tracker'
-import { showMessage } from 'react-native-flash-message'
+import validation from '../utils/validation'
+import { showError } from '../utils/helper'
 
 const Register = () => {
   const dispatch = useDispatch()
@@ -14,19 +15,31 @@ const Register = () => {
 
   const user = useSelector(state => state.user)
 
+  const isValidate = () => {
+    const error = validation({ email, password })
+    if (error) {
+      showError(error)
+      return false
+    }
+    return true
+  }
+
   const onPress = async () => {
+
+   const checkValidation = isValidate()
+    if (!checkValidation) {
+      return
+    }
+
     try {
     const response = await tracker.post('/signup', { email, password })
     console.log(response.data)
     } catch (error) {
       console.log(error)
-      showMessage({
-        message: error.response.data,
-        description: 'Something went wrong',
-        type: 'danger',
-      })
+      showError(error?.response?.data)
     }
   }
+  
 
   return (
     <SafeAreaView style={styles.container}>

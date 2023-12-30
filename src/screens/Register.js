@@ -3,12 +3,12 @@ import React from 'react'
 import { Button, Input, Text } from '@rneui/base'
 import Spacer from '../components/Spacer'
 import { useDispatch, useSelector } from 'react-redux'
-import { updateFirstName, updateIsLogged, updateLastName } from '../redux/UserReducer/reducer'
+import {updateAuth, updateEmail } from '../redux/UserReducer/reducer'
 import tracker from '../api/tracker'
 import validation from '../utils/validation'
 import { showError } from '../utils/helper'
 
-const Register = () => {
+const Register = ({navigation}) => {
   const dispatch = useDispatch()
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
@@ -24,6 +24,11 @@ const Register = () => {
     return true
   }
 
+  const saveToken = (token,email) => {
+    dispatch(updateAuth({auth:token}))
+    dispatch(updateEmail({email}))
+  }
+
   const onPress = async () => {
 
    const checkValidation = isValidate()
@@ -33,7 +38,8 @@ const Register = () => {
 
     try {
     const response = await tracker.post('/signup', { email, password })
-    console.log(response.data)
+    const { token } = response.data
+    saveToken(token,email)
     } catch (error) {
       console.log(error)
       showError(error?.response?.data)

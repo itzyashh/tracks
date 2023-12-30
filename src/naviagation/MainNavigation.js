@@ -45,6 +45,7 @@ const AppStack = () => {
 
 export const MainNavigation = () => {
   const user = useSelector(state => state.user)
+  console.log(user)
   return (
 
       <NavigationContainer>
@@ -53,7 +54,7 @@ export const MainNavigation = () => {
             headerShown: false
           }}
         >
-          {user.isLogged ? (
+          {user.auth ? (
             <Stack.Screen name='AppStack' component={AppStack} />
           ) : (
             <Stack.Screen name='AuthStack' component={AuthStack} />

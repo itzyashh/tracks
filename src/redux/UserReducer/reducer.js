@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 
 
 const initialState = {
-    isLogged: false,
+    auth:'',
     firstName: '',
     lastName: '',
     _id: '',
@@ -26,21 +26,27 @@ const User = createSlice({
         updateId: (state, action) => {
             state._id = action.payload._id
         },
-        updateIsLogged: (state, action) => {
-            state.isLogged = action.payload.isLogged
+        updateAuth: (state, action) => {
+            state.auth = action.payload.auth
         },
         updateAll: (state, action) => {
             state.firstName = action.payload.firstName
             state.lastName = action.payload.lastName
             state.email = action.payload.email
             state._id = action.payload._id
-            state.isLogged = action.payload.isLogged
+            state.auth = action.payload.auth
         },
+        logoutUser: (state, action) => {
+            return {
+                ...initialState,
+                email: state.email
+            }
+        }
 
         
     },
 })
 
-export const { updateFirstName, updateLastName, updateEmail, updateId, updateIsLogged, updateAll } = User.actions
+export const { updateFirstName, updateLastName, updateEmail, updateId, updateAuth, updateAll,logoutUser } = User.actions
 
 export default User.reducer
